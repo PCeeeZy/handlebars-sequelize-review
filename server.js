@@ -1,7 +1,10 @@
 //  dependencies
 const express = require('express');
+const exphbs = require('express-handlebars')
 
-const apiRoutes = require('./routes/apiRoutes');
+const db = require('./models');
+
+const routes = require('./routes');
 
 // create an instance of express
 const app = express();
@@ -16,10 +19,12 @@ app.use(express.json());
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-app.use(apiRoutes);
+app.use(routes);
 
 // Start our server so that it can begin listening to client requests.
-app.listen(PORT, function() {
+db.sequelize.sync().then(function() {
+    app.listen(PORT, function() {
     // Log (server-side) when our server has started
     console.log("Server listening on: http://localhost:" + PORT);
-  });  
+  })
+}); 

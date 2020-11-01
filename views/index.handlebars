@@ -1,0 +1,14 @@
+<h1>Burger Fun</h1>
+
+<ul>
+    {{ #each burgers}}
+        {{ #if devoured }}
+            <li>
+                Name: {{ name }}
+                <button class="remake" data-burger-id={{id}}>
+                    Remake Burger
+                </button>
+            </li>
+        {{ /if }}
+    {{ /each}}
+</ul>
